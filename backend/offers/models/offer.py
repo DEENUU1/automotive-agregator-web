@@ -62,6 +62,10 @@ class Offer(BaseModel):
         ("rear-wheel", "read-wheel"),
         ("all-wheel-permanent", "all-wheel-permanent")
     )
+    SOURCES = (
+        ("olx", "olx"),
+        ("otomoto", "otomoto")
+    )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
@@ -83,6 +87,7 @@ class Offer(BaseModel):
     color = models.CharField(max_length=30, choices=COLORS, null=True, blank=True)
     condition = models.CharField(max_length=20, choices=CONDITIONS, null=True, blank=True)
     drive = models.CharField(max_length=30, choices=DRIVE, null=True, blank=True)
+    source = models.CharField(max_length=30, choices=SOURCES)
     active = models.BooleanField(default=False)
 
     def __str__(self):
