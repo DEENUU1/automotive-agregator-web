@@ -19,4 +19,4 @@ class Location(models.Model):
         verbose_name = 'Location'
         verbose_name_plural = 'Locations'
         ordering = ['country', 'region', 'city']
-        unique_together = ('city', 'region')
+        # unique_together = ('city', 'region')

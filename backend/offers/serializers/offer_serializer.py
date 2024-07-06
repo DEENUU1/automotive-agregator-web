@@ -1,11 +1,22 @@
-from django.forms import DateTimeField
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, ListSerializer, DateTimeField
 from offers.models.offer import Offer
 from offers.serializers.location_serializer import LocationInputSerializer, LocationOutputSerializer
 from offers.serializers.price_serializer import PriceOutputSerializer, PriceInputSerializer
+from offers.services.offer_service import OfferService
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+class OfferListInputSerializer(ListSerializer):
+    _service = OfferService()
+
+    def create(self, validated_data):
+        return self._service.create_many_offers(validated_data)
 
 
 class OfferInputSerializer(ModelSerializer):
+    _service = OfferService()
     location = LocationInputSerializer()
     price = PriceInputSerializer()
 
@@ -32,6 +43,10 @@ class OfferInputSerializer(ModelSerializer):
             "condition",
             "drive",
         ]
+        list_serializer_class = OfferListInputSerializer
+
+    def create(self, validated_data):
+        return self._service.create_offer(validated_data)
 
 
 class OfferOutputSerializer(ModelSerializer):
@@ -44,7 +59,7 @@ class OfferOutputSerializer(ModelSerializer):
     class Meta:
         model = Offer
         fields = [
-            "id"
+            "id",
             "title",
             "offer_url",
             "image_url",
