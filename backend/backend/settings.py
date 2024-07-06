@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # applications
+    "offers",
 
     # 3rd party
     "rest_framework",
