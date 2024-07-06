@@ -15,7 +15,13 @@ class LocationAdmin(admin.ModelAdmin):
 
 
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ('title', 'location', 'price', 'category')
+    list_display = ('title', 'location', 'price', 'category', 'active')
     list_filter = ('location', 'category')
+    list_editable = ('active',)
     search_fields = ('title', 'description')
     readonly_fields = ('created_at', 'updated_at')
+
+
+admin.site.register(Price, PriceAdmin)
+admin.site.register(Location, LocationAdmin)
+admin.site.register(Offer, OfferAdmin)

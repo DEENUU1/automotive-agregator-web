@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from utils.base_model import BaseModel
 from offers.models.price import Price
@@ -61,6 +63,7 @@ class Offer(BaseModel):
         ("all-wheel-permanent", "all-wheel-permanent")
     )
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     offer_url = models.URLField(max_length=500)
     image_url = models.URLField(max_length=500, null=True, blank=True)
@@ -80,6 +83,7 @@ class Offer(BaseModel):
     color = models.CharField(max_length=30, choices=COLORS, null=True, blank=True)
     condition = models.CharField(max_length=20, choices=CONDITIONS, null=True, blank=True)
     drive = models.CharField(max_length=30, choices=DRIVE, null=True, blank=True)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
