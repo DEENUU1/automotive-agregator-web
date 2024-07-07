@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     # applications
     "offers",
+    "auth",
 
     # 3rd party
     "rest_framework",
