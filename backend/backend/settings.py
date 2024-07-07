@@ -225,6 +225,8 @@ REST_FRAMEWORK = {
     }
 }
 
+GOOGLE_LOGIN_CALLBACK_URL = os.getenv("GOOGLE_LOGIN_CALLBACK_URL")
+
 # Cors configuration
 
 if WORK_MODE == "DEV" or WORK_MODE == "TEST":
