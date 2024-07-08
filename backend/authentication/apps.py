@@ -3,8 +3,8 @@ from django.apps import AppConfig
 
 class AuthenticationConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'auth'
+    name = 'authentication'
 
     def ready(self):
-        import auth.signals
+        import authentication.signals
         print("=====Authentication signals connected=====")
