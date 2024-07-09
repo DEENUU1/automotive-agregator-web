@@ -7,6 +7,7 @@ from utils.custom_pagination import CustomPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.throttling import UserRateThrottle
+from rest_framework.permissions import IsAuthenticated
 
 
 class OfferListView(ListAPIView):
@@ -16,6 +17,7 @@ class OfferListView(ListAPIView):
     pagination_class = CustomPagination
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
     throttle_classes = (UserRateThrottle,)
+    permission_classes = (IsAuthenticated,)
 
     ordering_fields = [
         "created_at",
