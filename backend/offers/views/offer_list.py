@@ -21,8 +21,8 @@ class OfferListView(ListAPIView):
 
     ordering_fields = [
         "created_at",
-        "price__value__from",
-        "price__value__to"
+        "price__value",
+        # "price__value_to"
     ]
 
     if settings.WORK_MODE == "PROD":
