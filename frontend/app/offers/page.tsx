@@ -2,7 +2,7 @@
 
 import React from "react";
 import {useSession} from "next-auth/react";
-import {Card, Image, Divider, SelectItem, Select} from "@nextui-org/react";
+import {Card, Image, Divider, SelectItem, Select, Link} from "@nextui-org/react";
 import {CardBody} from "@nextui-org/card";
 
 const fuelTypes = [
@@ -117,7 +117,9 @@ export default function OfferList() {
 
 	return (
 		<>
-			<h1 className="text-2xl font-bold mb-6 mt-5 mb-5 text-center">Offers</h1>
+			<h1 className="text-2xl font-bold mb-6 mt-5 text-center">
+				Offers
+			</h1>
 
 			<div
 				className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-1 gap-y-2 mb-8 justify-center mx-auto max-w-5xl">
@@ -233,7 +235,9 @@ export default function OfferList() {
 								</div>
 								<div className="col-span-1 2xl:col-span-9">
 									<div className="flex justify-between items-center mb-2 sm:mb-4 flex-wrap gap-2 sm:gap-4">
-										<h3 className="text-md sm:text-xl font-bold truncate max-w-[65%]">{offer.title}</h3>
+										<Link href={`/offers/${offer.id}`}><h3 className="text-md sm:text-xl font-bold truncate max-w-[100%]">
+											{offer.title}
+										</h3></Link>
 										<span
 											className="text-md sm:text-xl font-semibold whitespace-nowrap">{offer.price.value} {offer.price.currency}</span>
 									</div>
