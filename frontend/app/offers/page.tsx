@@ -2,8 +2,15 @@
 
 import React from "react";
 import {useSession} from "next-auth/react";
-import {Card, Image, Divider, SelectItem, Select, Link} from "@nextui-org/react";
+import Image from 'next/image';
+import {Card, Image as ImageNextUI, Divider, SelectItem, Select, Link} from "@nextui-org/react";
 import {CardBody} from "@nextui-org/card";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react";
+
+const sources = [
+	{"value": "olx", "image": "/companies/olx-logo-20F1656D13-seeklogo.com.png"},
+	{"value": "otomoto", "image": ""}
+]
 
 const fuelTypes = [
 	{value: "lpg", label: "LPG"},
@@ -215,47 +222,60 @@ export default function OfferList() {
 				</Select>
 			</div>
 
-			<div className="flex flex-col space-y-6 max-w-5xl mx-auto mt-5 mb-5">
-				{offers.map((offer) => (
-					<Card key={offer.id} isBlurred={true}
-								className="border-none bg-background/60 dark:bg-default-100/50 w-full"
-								shadow="sm"
-					>
-						<CardBody className="p-4 sm:p-6">
-							<div className="grid grid-cols-1 2xl:grid-cols-12 gap-4 sm:gap-6 items-start">
-								<div className="relative col-span-1 2xl:col-span-3 aspect-video 2xl:aspect-square">
-									{offer.image_url && (
-										<Image
-											src={offer.image_url}
-											alt={offer.title}
-											shadow="md"
-											className="object-cover w-full h-full"
-										/>
-									)}
-								</div>
-								<div className="col-span-1 2xl:col-span-9">
-									<div className="flex justify-between items-center mb-2 sm:mb-4 flex-wrap gap-2 sm:gap-4">
-										<Link href={`/offers/${offer.id}`}><h3 className="text-md sm:text-xl font-bold truncate max-w-[100%]">
-											{offer.title}
-										</h3></Link>
-										<span
-											className="text-md sm:text-xl font-semibold whitespace-nowrap">{offer.price.value} {offer.price.currency}</span>
-									</div>
-									<p className="text-gray-600 mb-2 sm:mb-4 line-clamp-2 sm:line-clamp-3">{offer.description}</p>
-									<Divider className="my-2 sm:my-4"/>
-									<div className="flex flex-wrap text-sm sm:text-base gap-2 sm:gap-4">
-										<span className="font-semibold">{offer.mileage} km</span>
-										<span className="font-semibold">{offer.fuel_type}</span>
-										<span className="font-semibold">{offer.gearbox}</span>
-										<span className="font-semibold">{offer.production_year}</span>
-										<span className="font-semibold">{offer.location.city}, {offer.location.region}</span>
+			<Table aria-label="Offers table" className="max-w-7xl mx-auto">
+				<TableHeader>
+					<TableColumn>Title</TableColumn>
+					<TableColumn>Type</TableColumn>
+					<TableColumn>Mileage</TableColumn>
+					<TableColumn>Source</TableColumn>
+					<TableColumn>Price</TableColumn>
+				</TableHeader>
+				<TableBody>
+					{offers.map((offer) => (
+						<TableRow key={offer.id}>
+							<TableCell>
+								<div className="flex items-start space-x-2">
+									<img src={offer.image_url} alt={offer.title} className="w-16 h-12 object-cover"/>
+									<div>
+										<Link href={`/offers/${offer.id}`} className="font-semibold">{offer.title}</Link>
+										<div className="grid grid-cols-2 gap-x-4 mt-2 text-sm">
+											<div>
+												<div>Engine power: {offer.engine_power || 'N/A'}</div>
+												<div>Fuel type: {offer.fuel_type || 'N/A'}</div>
+											</div>
+											<div>
+												<div>Geabox: {offer.gearbox || 'N/A'}</div>
+												<div>Engine size: {offer.engine_size || 'N/A'}</div>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</CardBody>
-					</Card>
-				))}
-			</div>
+							</TableCell>
+							<TableCell>{offer.category}</TableCell>
+							<TableCell>
+								<div>{offer.mileage} km</div>
+							</TableCell>
+							<TableCell>
+								<Link href={offer.offer_url}>
+								{sources.find(s => s.value === offer.source)?.image ? (
+									<Image
+										src={sources.find(s => s.value === offer.source).image}
+										alt={offer.source}
+										width={40}
+										height={20}
+										objectFit="contain"
+										className="rounded-full"
+									/>
+								) : (
+									offer.source
+								)}
+								</Link>
+							</TableCell>
+							<TableCell>{offer.price.value} {offer.price.currency}</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
 		</>
 	);
 }

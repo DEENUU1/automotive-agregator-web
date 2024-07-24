@@ -70,6 +70,7 @@ class OfferOutputSerializer(ModelSerializer):
             "gearbox",
             "production_year",
             "location",
+            "source",
             "publication_time",
             "price",
             "category",
